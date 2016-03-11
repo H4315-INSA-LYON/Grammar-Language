@@ -72,7 +72,7 @@ namespace lutinCompiler
 		 */
 		Automat()
 		{
-			stats.push(new State0("Etat Initiale"));
+			//stats.push(new State0("Etat Initiale"));
 		}
 
 		/*
@@ -106,8 +106,21 @@ namespace lutinCompiler
 		void shift(Symbol * s, State *state)
 		{
 			stats.push(state);
-			s = scanner.nextSymbol();
-			symbols.push(s);
+
+			if (s == nullptr)
+			{
+				s = scanner.nextSymbol();
+			}
+			else
+			{	
+				if (*s <= 16)
+				{
+					s = scanner.nextSymbol();
+					
+				}
+
+				symbols.push(s);
+			}
 
 			// temporaire
 			cout << "Transition: ";
@@ -133,10 +146,10 @@ namespace lutinCompiler
 			// Construction de l'arbre
 
 			// Empiler le symbole
-			symbols.push(s);
+			//symbols.push(symbols.top());
 
 			// Faire la transition de l'etat en sommet de la pile avec le SYMBOLE non terminal s
-			stats.top()->transition(*this, s);
+			stats.top()->transition(*this, symbols.top());
 		}
 
 

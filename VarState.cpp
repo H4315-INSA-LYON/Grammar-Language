@@ -10,11 +10,12 @@ State4::State4(const char* name) : State(name)
 
 void State4::print()
 {
-
+	State::print();
 }
 
 bool State4 ::transition(Automat &automat, Symbol *s)
 {
+	s->print();
     switch(*s)
     {
     case ID_TOKEN:
@@ -38,11 +39,12 @@ State7::State7(const char* name) : State(name)
 
 void State7::print()
 {
-
+	State::print();
 }
 
 bool State7 ::transition(Automat &automat, Symbol *s)
 {
+	s->print();
     switch(*s)
     {
     case TOKEN_VAR_D:
@@ -70,11 +72,13 @@ State27::State27(const char* name) : State(name)
 
 void State27::print()
 {
+	State::print();
 }
 
 
 bool State27::transition(Automat &automat, Symbol *s)
 {
+	s->print();
     switch(*s)
     {
 
@@ -104,6 +108,7 @@ State28::State28(const char* name) : State(name)
 
 void State28 ::print()
 {
+	State::print();
 }
 
 bool State28::transition(Automat &automat, Symbol *s)
@@ -156,6 +161,7 @@ State29::State29(const char* name) : State(name)
 
 void State29 ::print()
 {
+	State::print();
 }
 
 bool State29::transition(Automat &automat, Symbol *s)
@@ -184,6 +190,7 @@ State30::State30(const char* name) : State(name)
 
 void State30::print()
 {
+	State::print();
 }
 
 bool State30::transition(Automat &automat, Symbol *s)
@@ -215,6 +222,7 @@ State48::State48(const char* name) : State(name)
 
 void State48::print()
 {
+	State::print();
 }
 
 bool State48::transition(Automat &automat, Symbol *s)
