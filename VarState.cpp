@@ -1,6 +1,6 @@
 #include "lutin.h"
 #include "VarState.h"
-//4,7,,27,28,29,30
+//4,7,,27,28,29,30,48
 using namespace lutinCompiler;
 
 //implementation of the State4 class methods
@@ -207,3 +207,33 @@ void State30::errorDiagnostic(Symbol *s)
 
 }
 
+//implementation of the State48 class methods
+State48::State48(const char* name) : State(name)
+{
+    
+}
+
+void State48::print()
+{
+}
+
+bool State48::transition(Automat &automat, Symbol *s)
+{
+    switch(*s)
+    {
+    case COM_TOKEN:
+        automat.reduce(TOKEN_VAR_D, 3);
+    break;
+    case SEM_TOKEN:
+        automat.reduce(TOKEN_VAR_D, 3);
+    break;
+    default:
+        errorDiagnostic(s);
+    }
+    return false;
+}
+
+void State48::errorDiagnostic(Symbol *s)
+{
+
+}
