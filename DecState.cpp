@@ -43,7 +43,7 @@ bool State0::transition(Automat &automat, Symbol *s)
 
 void State0::errorDiagnostic(Symbol *s)
 {
-	cerr << "Erreur (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): var ou const attendu" << endl;
+	cerr << "Erreur (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): var or const symbol expected" << endl;
 }
 
 //implementation of the State1 class methods
@@ -53,7 +53,7 @@ State1 :: State1(const char* name) : State(name)
 
 void State1::print()
 {
-	
+	State::print();	
 }
 
 void State1::errorDiagnostic(Symbol *s)
@@ -65,7 +65,23 @@ bool State1::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    	case WRITE_TOKEN:
+			automat.reduce(TOKEN_INSTS, 0);
+			break;
+		case READ_TOKEN:
+			automat.reduce(TOKEN_INSTS, 0);
+			break;
+		case ID_TOKEN:
+			automat.reduce(TOKEN_INSTS, 0);
+			break;
+		case EOF_TOKEN:
+			automat.reduce(WRITE_TOKEN, 0);
+			break;
+		case TOKEN_INSTS:
+			automat.shift(s, new State6("Etat 6"));
+			break;
+		default:
+			errorDiagnostic(s);
     }
     return false;
 }
@@ -85,7 +101,20 @@ bool State2::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    	case ECRIRE_TOKEN:
+			automat.reduce(TOKEN_DEC, 1);
+			break;
+		case WRITE_TOKEN:
+			automat.reduce(TOKEN_DEC, 1);
+			break;
+		case ID_TOKEN:
+			automat.reduce(TOKEN_DEC, 1);
+			break;
+		case EOF_TOKEN:
+			automat.reduce(TOKEN_DEC, 1);
+			break;	
+		default:
+			errorDiagnostic(s);
     }
     return false;
 }
@@ -110,7 +139,20 @@ bool State3::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    	case WRITE_TOKEN:
+			automat.reduce(TOKEN_DEC, 0);
+			break;
+		case READ_TOKEN:
+			automat.reduce(TOKEN_DEC, 0);
+			break;
+		case ID_TOKEN:
+			automat.reduce(TOKEN_DEC, 0);
+			break;
+		case ID_TOKEN:
+			automat.reduce(TOKEN_DEC, 0);
+			break;
+		default:
+			errorDiagnostic();
     }
     return false;
 }
