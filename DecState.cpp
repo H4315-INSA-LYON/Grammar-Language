@@ -66,16 +66,16 @@ bool State1::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     	case WRITE_TOKEN:
-			automat.reduce(new NoTerminalInsts(), 0);
+			automat.reduce(new NoTerminalSymbolInsts(), 0);
 			break;
 		case READ_TOKEN:
-			automat.reduce(new NoTerminalInsts(), 0);
+			automat.reduce(new NoTerminalSymbolInsts(), 0);
 			break;
 		case ID_TOKEN:
-			automat.reduce(new NoTerminalInsts(), 0);
+			automat.reduce(new NoTerminalSymbolInsts(), 0);
 			break;
 		case EOF_TOKEN:
-			automat.reduce(new NoTerminalInsts(), 0);
+			automat.reduce(new NoTerminalSymbolInsts(), 0);
 			break;
 		case TOKEN_INSTS:
 			automat.shift(s, new State6("Etat 6"));
@@ -101,17 +101,17 @@ bool State2::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-    	case ECRIRE_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
+    	case WRITE_TOKEN:
+			automat.reduce(new NoTerminalSymbolDec(), 1);
 			break;
-		case WRITE_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
+		case READ_TOKEN:
+			automat.reduce(new NoTerminalSymbolDec(), 1);
 			break;
 		case ID_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
+			automat.reduce(new NoTerminalSymbolDec(), 1);
 			break;
 		case EOF_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
+			automat.reduce(new NoTerminalSymbolDec(), 1);
 			break;	
 		default:
 			errorDiagnostic(s);
@@ -140,19 +140,16 @@ bool State3::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     	case WRITE_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
+			automat.reduce(new NoTerminalSymbolDec(), 1);
 			break;
 		case READ_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
+			automat.reduce(new NoTerminalSymbolDec(), 1);
 			break;
 		case ID_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
-			break;
-		case ID_TOKEN:
-			automat.reduce(new NoTerminalDec(), 1);
-			break;
+			automat.reduce(new NoTerminalSymbolDec(), 1);
+		break;
 		default:
-			errorDiagnostic();
+			errorDiagnostic(s);
     }
     return false;
 }

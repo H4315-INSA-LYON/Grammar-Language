@@ -69,6 +69,9 @@
     <ClInclude Include="VarState.h">
       <Filter>Fichiers d%27en-tête\State</Filter>
     </ClInclude>
+    <ClInclude Include="NoTerminalSymbols.h">
+      <Filter>Fichiers d%27en-tête\symbol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -94,9 +97,6 @@
     </ClCompile>
     <ClCompile Include="VarState.cpp">
       <Filter>Fichiers d%27en-tête\State</Filter>
-    </ClCompile>
-    <ClCompile Include="NoTerminalSymbols.cpp">
-      <Filter>Fichiers d%27en-tête\symbol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

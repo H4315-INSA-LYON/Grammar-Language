@@ -91,8 +91,8 @@ namespace lutinCompiler
 
 			/*do
 			{
-				s->print();
 				s = scanner.nextSymbol();
+				s->print();
 			}
 			while (*s != EOF_TOKEN);*/
 		}
@@ -121,9 +121,22 @@ namespace lutinCompiler
 		 * @return: void
 		 * @exception: ERROR
 		 */
-		void reduce()
+		void reduce(Symbol *s, int popNumber)
 		{
-			// a implémenter
+			// dépiler popNumber symboles et états
+			for (int i=0; i < popNumber; i++)
+			{
+				stats.pop();
+				symbols.pop();
+			}
+
+			// Construction de l'arbre
+
+			// Empiler le symbole
+			symbols.push(s);
+
+			// Faire la transition de l'etat en sommet de la pile avec le SYMBOLE non terminal s
+			stats.top()->transition(*this, s);
 		}
 
 

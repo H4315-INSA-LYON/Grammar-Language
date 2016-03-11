@@ -15,7 +15,7 @@ namespace lutinCompiler
 	static int CARACTER_NUMBER = 0;
 
 	// Les mots clés du langage
-	const char key_word[WORDS_NUM][IDF_LENGTH] = {  "const", "var", "ecrire", "lire" };
+	const char key_word[WORDS_NUM][IDF_LENGTH] = {  "var", "const", "ecrire", "lire" };
 
 	class Scanner
 	{

@@ -86,6 +86,7 @@
     <ClInclude Include="HeaderSymbols.h" />
     <ClInclude Include="InstState.h" />
     <ClInclude Include="lutin.h" />
+    <ClInclude Include="NoTerminalSymbols.h" />
     <ClInclude Include="OperatorSymbols.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="SpecialSymbols.h" />
@@ -100,7 +101,6 @@
     <ClCompile Include="DecState.cpp" />
     <ClCompile Include="InstState.cpp" />
     <ClCompile Include="Lutin.cpp" />
-    <ClCompile Include="NoTerminalSymbols.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="stdafx.cpp" />

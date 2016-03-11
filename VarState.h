@@ -50,6 +50,15 @@ namespace lutinCompiler
         bool transition (Automat & Automat, Symbol * s);
 		void errorDiagnostic(Symbol*);
     };
+
+	class State48 : public State
+    {
+	public:
+        State48 (const char* name);
+		void print();
+        bool transition (Automat & Automat, Symbol * s);
+		void errorDiagnostic(Symbol*);
+    };
 	
 	class State30 : public State
     {

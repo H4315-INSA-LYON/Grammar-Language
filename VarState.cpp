@@ -129,7 +129,7 @@ bool State28::transition(Automat &automat, Symbol *s)
         automat.reduce(new NoTerminalSymbolDec(), 0);
     break; 
     case TOKEN_DEC:
-        automat.shift(s, new State48("State 48"));
+        //automat.shift(s, new State48("State 48"));
     break;
     case TOKEN_VAR:
         automat.shift(s, new State2("State 2"));
