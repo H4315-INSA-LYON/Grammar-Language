@@ -43,7 +43,7 @@ bool State0::transition(Automat &automat, Symbol *s)
 
 void State0::errorDiagnostic(Symbol *s)
 {
-	cerr << "Erreur (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): var or const symbol expected" << endl;
+	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): var or const symbol expected" << endl;
 }
 
 //implementation of the State1 class methods
@@ -58,7 +58,7 @@ void State1::print()
 
 void State1::errorDiagnostic(Symbol *s)
 {
-
+	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): write, read, id, eof or INSTS token expected" << endl;
 }
 
 bool State1::transition(Automat &automat, Symbol *s)
@@ -121,7 +121,7 @@ bool State2::transition(Automat &automat, Symbol *s)
 
 void State2::errorDiagnostic(Symbol *s)
 {
-
+	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): write, read, id or eof token expected" << endl;
 }
 
 //implementation of the State3 class methods
@@ -159,5 +159,5 @@ bool State3::transition(Automat &automat, Symbol *s)
 
 void State3::errorDiagnostic(Symbol *s)
 {
-
+	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): write, read, id or eof token expected" << endl;
 }
