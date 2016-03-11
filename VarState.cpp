@@ -17,7 +17,11 @@ bool State4 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    case ID_TOKEN:
+        automat.shift(s, new State7("Etat 7"));
+    break;
+    default:
+        errorDiagnostic(s);
     }
     return false;
 }
@@ -41,7 +45,15 @@ bool State7 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    case TOKEN_VAR_D:
+        automat.shift(s, new State27("Etat 27"));
+    break;        
+    case COM_TOKEN:
+        automat.reduce(TOKEN_VAR_D, 0);
+    break;
+    case SEM_TOKEN:
+        automat.reduce(TOKEN_VAR_D, 0);
+    break;
     }
     return false;
 }
@@ -66,6 +78,15 @@ bool State27::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
 
+    case COM_TOKEN:
+        automat.shift(s, new State29("Etat 29"));
+    break;
+
+    case SEM_TOKEN:
+        automat.shift(s, new State28("Etat 28"));
+    break; 
+    default:
+        errorDiagnostic(s);
     }
     return false;
 }
@@ -89,8 +110,24 @@ bool State28::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
-    }
+    case VAR_TOKEN:
+        automat.shift(s, new State4("State 4"));
+    break;
+    case CONST_TOKEN:
+        automat.shift(s, new State5("State 5"));
+    break;
+    case WRITE_TOKEN:
+        automat.reduce(TOKEN_DEC, 0);
+    break;
+    case READ_TOKEN:
+        automat.reduce(TOKEN_DEC, 0);
+    break;
+    case ID_TOKEN:
+        automat.reduce(TOKEN_DEC, 0);
+    break;
+    default:
+        errorDiagnostic(s);
+    }  
     return false;
 }
 
@@ -113,7 +150,11 @@ bool State29::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    case ID_TOKEN:
+        automat.shift(s, new State30("State 30"));
+    break;
+    default:
+        errorDiagnostic(s);
     }
     return false;
 }
@@ -137,7 +178,14 @@ bool State30::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+    case COM_TOKEN:
+        automat.reduce(TOKEN_VAR_D, 3);
+    break;
+    case SEM_TOKEN:
+        automat.reduce(TOKEN_VAR_D, 3);
+    break;
+    default:
+        errorDiagnostic(s);
     }
     return false;
 }
