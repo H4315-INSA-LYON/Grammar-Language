@@ -16,7 +16,9 @@ bool State5 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case ID_TOKEN: automat.shift(s,new State8("Etat 8"));
+					   break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -33,7 +35,7 @@ State8 :: State8(const char* name) : State(name)
 
 void State8 ::print()
 {
-
+	State::print();
 }
 
 
@@ -41,7 +43,9 @@ bool State8 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+	case EQ_TOKEN: automat.shift(s,new State9("Etat 9"));
+				   break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -65,7 +69,9 @@ bool State9 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case NUM_TOKEN: automat.shift(s,new State20("Etat 20"));
+				       break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -90,7 +96,11 @@ bool State20 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+	case SEM_TOKEN: //automat.reduce(new NoTerminalSymbolConstDec(),0);
+				   break;
+		case COM_TOKEN: //automat.reduce(new NoTerminalSymbolConstDec(),0);
+				   break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -115,7 +125,11 @@ bool State21 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case SEM_TOKEN: automat.shift(s,new State22("Etat 22"));
+				       break;
+		case COM_TOKEN: automat.shift(s,new State49("Etat 49"));
+				       break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -139,7 +153,25 @@ bool State22 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case VAR_TOKEN: automat.shift(s,new State4("Etat 4"));
+				       break;
+		case CONST_TOKEN: automat.shift(s,new State5("Etat 5"));
+				       break;
+		case WRITE_TOKEN: //automat.reduce(new NoTerminalSymbolDec(),0);
+				       break;
+		case READ_TOKEN: //automat.reduce(new NoTerminalSymbolDec(),0);
+				       break;
+		case ID_TOKEN: //automat.reduce(new NoTerminalSymbolDec(),0);
+				       break;
+		case EOF_TOKEN: //automat.reduce(new NoTerminalSymbolDec(),0);
+				       break;
+		case TOKEN_DEC: automat.shift(s,new State23("Etat 23"));
+				       break;
+		case TOKEN_VAR: automat.shift(s,new State2("Etat 2"));
+				       break;
+		case TOKEN_CONST: automat.shift(s,new State3("Etat 3"));
+				       break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -163,6 +195,15 @@ bool State23 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
+		case WRITE_TOKEN: //automat.reduce(new NoTerminalSymbolConst(),7);
+				       break;
+		case READ_TOKEN: //automat.reduce(new NoTerminalSymbolConst(),7);
+				       break;
+		case ID_TOKEN: //automat.reduce(new NoTerminalSymbolConst(),7);
+				       break;
+		case EOF_TOKEN: //automat.reduce(new NoTerminalSymbolConst(),7);
+				       break;
+		default		 : errorDiagnostic(s);
 
     }
     return false;
@@ -188,7 +229,9 @@ bool State24 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case EQ_TOKEN: automat.shift(s,new State25("Etat 25"));
+				   break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -213,7 +256,9 @@ bool State25 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case NUM_TOKEN: automat.shift(s,new State26("Etat 26"));
+					   break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
@@ -238,12 +283,42 @@ bool State26 ::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
+		case COM_TOKEN: //automat.reduce(new NoTerminalSymbolConstDec(),5);
+					   break;
+		case SEM_TOKEN: //automat.reduce(new NoTerminalSymbolConstDec(),5);
+					   break;
+		default		 : errorDiagnostic(s);
     }
     return false;
 }
 
 void State26::errorDiagnostic(Symbol *s)
+{
+
+}
+//implementation of the State26 class methods
+State49 :: State49(const char* name) : State(name)
+{
+}
+
+void State49 ::print()
+{
+
+}
+
+
+bool State49 ::transition(Automat &automat, Symbol *s)
+{
+    switch(*s)
+    {
+		case SEM_TOKEN: automat.shift(s,new State24("Etat24"));
+					   break;
+		default		 : errorDiagnostic(s);
+    }
+    return false;
+}
+
+void State49::errorDiagnostic(Symbol *s)
 {
 
 }
