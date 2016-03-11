@@ -93,7 +93,7 @@ State2::State2(const char* name) : State(name)
 
 void State2::print()
 {
-
+	State::print();
 }
 
 
@@ -131,7 +131,7 @@ State3::State3(const char* name) : State(name)
 
 void State3::print()
 {
-
+	State::print();
 }
 
 
