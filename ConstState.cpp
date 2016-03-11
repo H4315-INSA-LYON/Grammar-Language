@@ -62,7 +62,7 @@ State9 :: State9(const char* name) : State(name)
 
 void State9 ::print()
 {
-
+	State::print();
 }
 
 bool State9 ::transition(Automat &automat, Symbol *s)
@@ -88,7 +88,7 @@ State20 :: State20(const char* name) : State(name)
 
 void State20 ::print()
 {
-
+	State::print();
 }
 
 
@@ -117,7 +117,7 @@ State21 :: State21(const char* name) : State(name)
 
 void State21 ::print()
 {
-  
+	State::print();
 }
 
 
@@ -146,7 +146,7 @@ State22 :: State22(const char* name) : State(name)
 
 void State22 ::print()
 {
-
+	State::print();
 }
 
 bool State22 ::transition(Automat &automat, Symbol *s)
@@ -188,7 +188,7 @@ State23 :: State23(const char* name) : State(name)
 
 void State23 ::print()
 {
-
+	State::print();
 }
 
 bool State23 ::transition(Automat &automat, Symbol *s)
@@ -221,7 +221,7 @@ State24 :: State24(const char* name) : State(name)
 
 void State24 ::print()
 {
-
+	State::print();
 }
 
 
@@ -248,7 +248,7 @@ State25 :: State25(const char* name) : State(name)
 
 void State25 ::print()
 {
-
+	State::print();
 }
 
 
@@ -275,7 +275,7 @@ State26 :: State26(const char* name) : State(name)
 
 void State26 ::print()
 {
-
+	State::print();
 }
 
 
@@ -303,7 +303,7 @@ State49 :: State49(const char* name) : State(name)
 
 void State49 ::print()
 {
-
+	State::print();
 }
 
 
