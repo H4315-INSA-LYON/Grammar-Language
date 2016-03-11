@@ -49,10 +49,10 @@ bool State7 ::transition(Automat &automat, Symbol *s)
         automat.shift(s, new State27("Etat 27"));
     break;        
     case COM_TOKEN:
-        automat.reduce(TOKEN_VAR_D, 0);
+        automat.reduce(new NoTerminalSymbolVarDec(), 0);
     break;
     case SEM_TOKEN:
-        automat.reduce(TOKEN_VAR_D, 0);
+        automat.reduce(new NoTerminalSymbolVarDec(), 0);
     break;
     }
     return false;
@@ -117,16 +117,16 @@ bool State28::transition(Automat &automat, Symbol *s)
         automat.shift(s, new State5("State 5"));
     break;
     case WRITE_TOKEN:
-        automat.reduce(TOKEN_DEC, 0);
+        automat.reduce(new NoTerminalSymbolDec(), 0);
     break;
     case READ_TOKEN:
-        automat.reduce(TOKEN_DEC, 0);
+        automat.reduce(new NoTerminalSymbolDec(), 0);
     break;
     case ID_TOKEN:
-        automat.reduce(TOKEN_DEC, 0);
+        automat.reduce(new NoTerminalSymbolDec(), 0);
     break;
     case EOF_TOKEN:
-        automat.reduce(TOKEN_DEC, 0);
+        automat.reduce(new NoTerminalSymbolDec(), 0);
     break; 
     case TOKEN_DEC:
         automat.shift(s, new State48("State 48"));
@@ -191,10 +191,10 @@ bool State30::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     case COM_TOKEN:
-        automat.reduce(TOKEN_VAR_D, 3);
+        automat.reduce(new NoTerminalSymbolVarDec(), 3);
     break;
     case SEM_TOKEN:
-        automat.reduce(TOKEN_VAR_D, 3);
+        automat.reduce(new NoTerminalSymbolVarDec(), 3);
     break;
     default:
         errorDiagnostic(s);
@@ -221,12 +221,18 @@ bool State48::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-    case COM_TOKEN:
-        automat.reduce(TOKEN_VAR_D, 3);
+    case WRITE_TOKEN:
+        automat.reduce(new NoTerminalSymbolVar(), 6);
     break;
-    case SEM_TOKEN:
-        automat.reduce(TOKEN_VAR_D, 3);
+    case READ_TOKEN:
+        automat.reduce(new NoTerminalSymbolVar(), 6);
     break;
+    case ID_TOKEN:
+        automat.reduce(new NoTerminalSymbolVar(), 6);
+    break; 
+    case EOF_TOKEN:
+        automat.reduce(new NoTerminalSymbolVar(), 6);
+    break;   
     default:
         errorDiagnostic(s);
     }
