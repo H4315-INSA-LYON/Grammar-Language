@@ -125,6 +125,18 @@ bool State28::transition(Automat &automat, Symbol *s)
     case ID_TOKEN:
         automat.reduce(TOKEN_DEC, 0);
     break;
+    case EOF_TOKEN:
+        automat.reduce(TOKEN_DEC, 0);
+    break; 
+    case TOKEN_DEC:
+        automat.shift(s, new State48("State 48"));
+    break;
+    case TOKEN_VAR:
+        automat.shift(s, new State2("State 2"));
+    break;   
+    case TOKEN_CONST:
+        automat.shift(s, new State3("State 3"));
+    break;            
     default:
         errorDiagnostic(s);
     }  
