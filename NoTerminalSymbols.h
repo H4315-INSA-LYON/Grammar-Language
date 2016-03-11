@@ -2,7 +2,6 @@
 
 #ifndef __NO_TERMINAL_SYMBOLS_CLASSES_
 #define __NO_TERMINAL_SYMBOLS_CLASSES_
-#endif
 
 namespace lutinCompiler
 {
@@ -198,3 +197,5 @@ namespace lutinCompiler
 		}
 	};
 }
+
+#endif
