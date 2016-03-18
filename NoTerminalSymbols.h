@@ -5,196 +5,519 @@
 
 namespace lutinCompiler
 {
-	class NoTerminalSymbolP : public Symbol
+
+	// Définir une liste de symboles
+	typedef array<Symbol*,7> SymbolList;
+
+	class NoTerminalSymbol : public Symbol
 	{
 	public:
-		NoTerminalSymbolP() : Symbol(TOKEN_P)
+		NoTerminalSymbol(TOKEN token) : Symbol(token)
 		{}
 
-		void print()
-		{
-			cout << "P" << endl;
-		}
+		virtual Symbol* construct(SymbolList &) = 0;
 	};
 
-	class NoTerminalSymbolDec : public Symbol
+	class NoTerminalSymbolP : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolDec() : Symbol(TOKEN_DEC)
-		{}
+		NoTerminalSymbolP() : NoTerminalSymbol(TOKEN_P)
+		{
+			dec = insts = nullptr;
+		}
 
 		void print()
 		{
-			cout << "DEC" << endl;
+			if (dec)
+				dec->print();
+
+			if (insts)
+				insts->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire P" << endl;
+
+			dec = list[1];
+			insts = list[0];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol *dec;
+		Symbol *insts;
 	};
 
-	class NoTerminalSymbolVarDec : public Symbol
+	class NoTerminalSymbolDec : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolVarDec() : Symbol(TOKEN_VAR_D)
-		{}
+		NoTerminalSymbolDec() : NoTerminalSymbol(TOKEN_DEC)
+		{
+			dec = nullptr;
+		}
 
 		void print()
 		{
-			cout << "VAR_DEC" << endl;
+			if (dec)
+				dec->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire DEC" << endl;
+
+			dec = list[0];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol *dec;
 	};
 
-	class NoTerminalSymbolConstDec : public Symbol
+	class NoTerminalSymbolVarDec : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolConstDec() : Symbol(TOKEN_CONST_D)
-		{}
+		NoTerminalSymbolVarDec() : NoTerminalSymbol(TOKEN_VAR_D)
+		{
+			id = varDec = nullptr;
+		}
 
 		void print()
 		{
-			cout << "CONST_DEC" << endl;
+			if (varDec)
+				varDec->print();
+
+			cout << ", ";
+			id->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire VAR_DEC" << endl;
+
+			varDec = list[2];
+			id = list[0];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol* id;
+		Symbol* varDec;
 	};
 
-	class NoTerminalSymbolVar : public Symbol
+	class NoTerminalSymbolConstDec : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolVar() : Symbol(TOKEN_VAR)
-		{}
+		NoTerminalSymbolConstDec() : NoTerminalSymbol(TOKEN_CONST_D)
+		{
+			constDec = value = id = nullptr;
+		}
 
 		void print()
 		{
-			cout << "VAR" << endl;
+			if (constDec)
+				constDec->print();
+
+			cout << ", ";
+			id->print();
+			cout << " = ";
+			value->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire CONST_DEC" << endl;
+
+			constDec = list[4];
+			value = list[0];
+			id = list[2];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol* id;
+		Symbol* value;
+		Symbol* constDec;
 	};
 
-	class NoTerminalSymbolConst : public Symbol
+	class NoTerminalSymbolVar : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolConst() : Symbol(TOKEN_CONST)
-		{}
+		NoTerminalSymbolVar() : NoTerminalSymbol(TOKEN_VAR)
+		{
+			dec = varDec = id = nullptr;
+		}
 
 		void print()
 		{
-			cout << "CONST" << endl;
+			cout << "var ";
+			id->print();
+			
+			if (varDec)
+				varDec->print();
+
+			cout << ";" << endl;
+
+			if (dec)
+				dec->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire VAR" << endl;
+
+			dec = list[0];
+			varDec = list[2];
+			id = list[3];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol* id;
+		Symbol* varDec;
+		Symbol* dec;
 	};
 
-	class NoTerminalSymbolInsts : public Symbol
+	class NoTerminalSymbolConst : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolInsts() : Symbol(TOKEN_INSTS)
-		{}
+		NoTerminalSymbolConst() : NoTerminalSymbol(TOKEN_CONST)
+		{
+			dec = constDec = id = value = nullptr;
+		}
 
 		void print()
 		{
-			cout << "INSTS" << endl;
+			cout << "const ";
+			id->print();
+			cout << " = ";
+			value->print();
+
+			if (constDec)
+				constDec->print();
+
+			cout << ";" << endl;
+
+			if (dec)
+				dec->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire CONST" << endl;
+
+			dec = list[0];
+			constDec = list[2];
+			value = list[3];
+			id = list[5];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol* id;
+		Symbol* value;
+		Symbol* constDec;
+		Symbol* dec;
 	};
 
-	class NoTerminalSymbolInst : public Symbol
+	class NoTerminalSymbolInsts : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolInst() : Symbol(TOKEN_INST)
-		{}
+		NoTerminalSymbolInsts() : NoTerminalSymbol(TOKEN_INSTS)
+		{
+			inst = insts = nullptr;
+		}
 
 		void print()
 		{
-			cout << "INST" << endl;
+			if (insts)
+				insts->print();
+
+			inst->print();
+
+			cout << ";" << endl;
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire INSTS" << endl;
+			
+			inst = list[1];
+			insts = list[2];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol *inst;
+		Symbol *insts;
 	};
 
-	class NoTerminalSymbolAff : public Symbol
+	class NoTerminalSymbolInst : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolAff() : Symbol(TOKEN_AFF)
-		{}
+		NoTerminalSymbolInst() : NoTerminalSymbol(TOKEN_INST)
+		{
+			inst = nullptr;
+		}
 
 		void print()
 		{
-			cout << "AFF" << endl;
+			inst->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire INST" << endl;
+			
+			return inst = list[0];
+		}
+
+	private:
+		Symbol *inst;
+
 	};
 
-	class NoTerminalSymbolWrite : public Symbol
+	class NoTerminalSymbolAff : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolWrite() : Symbol(TOKEN_WRITE)
-		{}
+		NoTerminalSymbolAff() : NoTerminalSymbol(TOKEN_AFF)
+		{
+			id = expr = nullptr;
+		}
 
 		void print()
 		{
-			cout << "ECRIRE" << endl;
+			id->print();
+			cout << " := ";
+			expr->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire AFF" << endl;
+			
+			id = list[2];
+			expr = list[0];
+
+			return nullptr;
+		}
+
+	private:
+		Symbol *id;
+		Symbol *expr;
 	};
 
-	class NoTerminalSymbolRead : public Symbol
+	class NoTerminalSymbolWrite : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolRead() : Symbol(TOKEN_READ)
-		{}
+		NoTerminalSymbolWrite() : NoTerminalSymbol(TOKEN_WRITE)
+		{
+			expr = nullptr;
+		}
 
 		void print()
 		{
-			cout << "LIRE" << endl;
+			cout << "ecrire ";
+			expr->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire ECRIRE" << endl;
+			
+			return expr = list[0];
+		}
+
+	private:
+		Symbol *expr;
 	};
 
-	class NoTerminalSymbolExpr : public Symbol
+	class NoTerminalSymbolRead : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolExpr() : Symbol(TOKEN_EXPR)
-		{}
+		NoTerminalSymbolRead() : NoTerminalSymbol(TOKEN_READ)
+		{
+			id = nullptr;
+		}
 
 		void print()
 		{
-			cout << "EXPR" << endl;
+			cout << "lire ";
+			id->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire LIRE" << endl;
+			
+			return id = list[0];
+		}
+
+	private:
+		Symbol *id;
 	};
 
-	class NoTerminalSymbolTerm : public Symbol
+	class NoTerminalSymbolExpr : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolTerm() : Symbol(TOKEN_TERM)
-		{}
+		NoTerminalSymbolExpr() : NoTerminalSymbol(TOKEN_EXPR)
+		{
+			expr = term = add = nullptr;
+		}
 
 		void print()
 		{
-			cout << "TERM" << endl;
+			if (expr)
+			{
+				expr->print();
+				add->print();
+			}
+
+			term->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire EXPR : " << list.size() << endl;
+
+			term = list[0];
+
+			if (list.size() == 3)
+			{
+				add = list[1];
+				expr = list[2];
+			}
+
+			return nullptr;
+		}
+
+	private:
+		Symbol *expr;
+		Symbol *add;
+		Symbol *term;
 	};
 
-	class NoTerminalSymbolFact : public Symbol
+	class NoTerminalSymbolTerm : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolFact() : Symbol(TOKEN_FACT)
-		{}
+		NoTerminalSymbolTerm() : NoTerminalSymbol(TOKEN_TERM)
+		{
+			term = mul = fact = nullptr;
+		}
 
 		void print()
 		{
-			cout << "FACT" << endl;
+			if (term)
+			{
+				term->print();
+				mul->print();
+			}
+
+			fact->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire TERM" << endl;
+			
+			fact = list[0];
+
+			if (list.size() == 3)
+			{
+				mul = list[1];
+				term = list[2];
+			}
+
+			return nullptr;
+		}
+
+	private:
+		Symbol *term;
+		Symbol *mul;
+		Symbol *fact;
 	};
 
-	class NoTerminalSymbolAddOp : public Symbol
+	class NoTerminalSymbolFact : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolAddOp() : Symbol(TOKEN_ADDOP)
-		{}
+		NoTerminalSymbolFact() : NoTerminalSymbol(TOKEN_FACT)
+		{
+			fact = nullptr;
+		}
 
 		void print()
 		{
-			cout << "ADDOP" << endl;
+			fact->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire FACT" << endl;
+
+			int i = (list.size() == 3 ? 1 : 0);
+
+			return fact = list[i];
+		}
+
+	private:
+		Symbol* fact;
 	};
 
-	class NoTerminalSymbolMulOp : public Symbol
+	class NoTerminalSymbolAddOp : public NoTerminalSymbol
 	{
 	public:
-		NoTerminalSymbolMulOp() : Symbol(TOKEN_MULOP)
-		{}
+		NoTerminalSymbolAddOp() : NoTerminalSymbol(TOKEN_ADDOP)
+		{
+			op = nullptr;
+		}
 
 		void print()
 		{
-			cout << "MULOP" << endl;
+			op->print();
 		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire ADDOP" << endl;
+
+			return op = list[0];
+		}
+
+	private:
+		Symbol *op;
+
+	};
+
+	class NoTerminalSymbolMulOp : public NoTerminalSymbol
+	{
+	public:
+		NoTerminalSymbolMulOp() : NoTerminalSymbol(TOKEN_MULOP)
+		{
+			op = nullptr;
+		}
+
+		void print()
+		{
+			op->print();
+		}
+
+		Symbol* construct(SymbolList &list)
+		{
+			cout << "Construire MULOP" << endl;
+
+			return op = list[0];
+		}
+
+	private:
+		Symbol *op;
 	};
 }
 

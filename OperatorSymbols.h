@@ -14,8 +14,10 @@ namespace lutinCompiler
 
 		void print()
 		{
-			cout << "+" << endl;
+			cout << "+";
 		}
+
+		
 	};
 
 	class MinusSymbol : public Symbol
@@ -26,8 +28,10 @@ namespace lutinCompiler
 
 		void print()
 		{
-			cout << "-" << endl;
+			cout << "-";
 		}
+
+		
 	};
 
 	class MuliplicationSymbol : public Symbol
@@ -38,8 +42,10 @@ namespace lutinCompiler
 
 		void print()
 		{
-			cout << "*" << endl;
+			cout << "*";
 		}
+
+		
 	};
 
 	class DivisionSymbol : public Symbol
@@ -50,7 +56,9 @@ namespace lutinCompiler
 
 		void print()
 		{
-			cout << "/" << endl;
+			cout << "/";
 		}
+
+	
 	};
 }

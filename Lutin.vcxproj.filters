@@ -19,6 +19,9 @@
     <Filter Include="Fichiers d%27en-tête\symbol">
       <UniqueIdentifier>{763fc742-2259-439d-ae9a-1d017534a368}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\tree">
+      <UniqueIdentifier>{2e2ea082-6563-49cd-8851-a79a9ecc11b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -71,6 +74,15 @@
     </ClInclude>
     <ClInclude Include="NoTerminalSymbols.h">
       <Filter>Fichiers d%27en-tête\symbol</Filter>
+    </ClInclude>
+    <ClInclude Include="Identificator.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>Fichiers d%27en-tête\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Expression.h">
+      <Filter>Fichiers d%27en-tête\tree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

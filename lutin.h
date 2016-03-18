@@ -14,13 +14,16 @@
 #define __LUTIN_COMPILER_NAMESPACE_
 #endif
 
-#include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stack>
+#include <string>
 #include <iostream>
-#include <stack>
+#include <vector>
+#include <map>
+#include <array>
 
 using namespace std;
 
@@ -46,6 +49,9 @@ enum TOKEN {    // Les symboles terminals
 		   };
 
 //*************************** Les bibliothèques ********************//
+#include "Identificator.h"
+//#include "Instruction.h"
+//#include "Expression.h"
 #include "Symbol.h"
 #include "State.h"
 // Les symboles fils
@@ -53,14 +59,18 @@ enum TOKEN {    // Les symboles terminals
 #include "VarState.h"
 #include "ConstState.h"
 #include "InstState.h"
-
+// L'analyseur lexical
 #include "Scanner.h"
 #include "Error.h"
 
-// Définir  la pile des symboles 
+// Définir la pile des symboles 
 typedef stack<lutinCompiler::Symbol*> StackSymbol;
 // Définir la pile des états
 typedef stack<lutinCompiler::State*> StackState;
+// Définir la table des identificateurs
+typedef map<string, lutinCompiler::Identificator*> IdentificatorList;
+typedef map<string, lutinCompiler::Identificator*>::iterator IteratorIdf;
+
 
 namespace lutinCompiler
 {
@@ -85,16 +95,14 @@ namespace lutinCompiler
 		{
 			scanner.load(filename);
 
-			Symbol * s = nullptr;
+			Symbol * s = scanner.getCurrentSymbol();
 
-			shift(s, new State0("Etat initial"));
-
-			/*do
+			if (stats.top()->transition(*this, s))
 			{
-				s = scanner.nextSymbol();
-				s->print();
+				symbols.top()->print();
+
+				cout << endl << "Ok! Votre code est correcte :)...";
 			}
-			while (*s != EOF_TOKEN);*/
 		}
 
 
@@ -103,17 +111,20 @@ namespace lutinCompiler
 		 * @return: void
 		 * @exception: ERROR
 		 */
-		void shift(Symbol * s, State *state)
+		bool shift(Symbol * s, State *state)
 		{
 			stats.push(state);
-			s = scanner.nextSymbol();
-			symbols.push(s);
 
-			// temporaire
-			cout << "Transition: ";
-			stats.top()->print();
+			if (*s <= 16)
+			{
+				symbols.push(s);
+				s = scanner.nextSymbol();
+			}
+			else
 
-			stats.top()->transition(*this, s);
+				s = scanner.getCurrentSymbol();
+
+			return stats.top()->transition(*this, s);
 		}
 
 		/*
@@ -121,28 +132,106 @@ namespace lutinCompiler
 		 * @return: void
 		 * @exception: ERROR
 		 */
-		void reduce(Symbol *s, int popNumber)
+		bool reduce(NoTerminalSymbol *s, int popNumber)
 		{
+			// Une liste temporaire des symbols destinés pour la construction de l'arbre abstrait
+			SymbolList * listSymbols = new SymbolList();
+
 			// dépiler popNumber symboles et états
 			for (int i=0; i < popNumber; i++)
 			{
+				(*listSymbols)[i] = symbols.top();
+
 				stats.pop();
 				symbols.pop();
 			}
 
-			// Construction de l'arbre
+			
 
-			// Empiler le symbole
-			symbols.push(s);
+			// Construction de l'arbre abstrait en ignorant les epsilons construction
+			if (popNumber > 0)
+			{
+				// Empiler le symbole
+				symbols.push(s);
+
+				s->construct(*listSymbols);
+				getchar();
+				
+				delete listSymbols;
+
+				listSymbols = new SymbolList();
+			}
+			else
+
+				symbols.push(nullptr);
 
 			// Faire la transition de l'etat en sommet de la pile avec le SYMBOLE non terminal s
-			stats.top()->transition(*this, s);
+			if (*s != TOKEN_P)
+			
+				return stats.top()->transition(*this, s);
+			
+			else
+				// Arrêter l'analyse avec succé
+				return true;
+		}
+
+		/** 
+		  Méthode qui va ignorer les symbols jusqu'à le symbole passé en paramètre
+		  @param: TOKEN token
+		  @return: bool [true] si le symbole est token [false] sinon
+		  @access: public
+		 */
+		bool ignoreSymbolsTo(TOKEN token)
+		{
+			while (*scanner.nextSymbol() != token && *scanner.nextSymbol() != EOF_TOKEN);
+
+			return *scanner.getCurrentSymbol() == token;
+		}
+
+		/**
+		 Méthode qui ajout un identificateur à la table
+		 @param: Identificator* idf
+		 @return: bool
+		 */
+		bool addIdentificator(Identificator *idf)
+		{
+			// Si l'identificateur existe déjà dans la liste afficher l'erreur correspant
+			if (identificators.find(idf->getName()) != identificators.end())
+			{
+				Error::semanticError(IDF_ALEARDY_EXIST, idf->getName());
+				return false;
+			}
+			// Ajouter l'identificateur dans la liste
+			else
+			{
+				identificators[idf->getName()] = idf;
+				return true;
+			}
+		}
+
+		/**
+		 Méthode qui vérifier si un identificateur est déjà déclaré
+		 @param: Identificator* idf
+		 @return: bool
+		 */
+		bool verifyIdentificator(Identificator *idf)
+		{
+			// Si l'identificateur n'existe déjà dans la liste afficher l'erreur correspant
+			if (identificators.find(idf->getName()) == identificators.end())
+			{
+				Error::semanticError(IDF_NOT_DECLARED, idf->getName());
+				return false;
+			}
+			else
+				return true;
 		}
 
 
 	private:
 		StackState stats;
 		StackSymbol symbols;
+		IdentificatorList identificators;
+//		AbstractTree tree;
 		Scanner scanner;
 	};
 

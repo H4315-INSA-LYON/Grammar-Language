@@ -82,10 +82,13 @@
     <ClInclude Include="ConstState.h" />
     <ClInclude Include="DecState.h" />
     <ClInclude Include="Error.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="ExpressionsSymbols.h" />
     <ClInclude Include="HeaderSymbols.h" />
+    <ClInclude Include="Identificator.h" />
     <ClInclude Include="InstState.h" />
     <ClInclude Include="lutin.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="NoTerminalSymbols.h" />
     <ClInclude Include="OperatorSymbols.h" />
     <ClInclude Include="Scanner.h" />

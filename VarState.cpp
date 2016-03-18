@@ -18,17 +18,23 @@ bool State4 ::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     case ID_TOKEN:
-        automat.shift(s, new State7("Etat 7"));
+        return automat.shift(s, new State7("Etat 7"));
     break;
     default:
-        errorDiagnostic(s);
+        errorDiagnostic(automat);
+		// Supposant que on a détécté la régle VAR	
+		//return automat.reduce(new NoTerminalSymbolVar(), 1);
     }
     return false;
 }
 
-void State4::errorDiagnostic(Symbol *s)
+void State4::errorDiagnostic(Automat &a)
 {
+	Error::syntaxError(IDF_EXPECTED);
 
+	/*a.ignoreSymbolsTo(SEM_TOKEN);
+
+	this->transition(a, new IdentificatorSymbol("id0"));*/
 }
 
 //implementation of the State7 class methods
@@ -41,26 +47,29 @@ void State7::print()
 	State::print();
 }
 
-bool State7 ::transition(Automat &automat, Symbol *s)
+bool State7::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
     case TOKEN_VAR_D:
-        automat.shift(s, new State27("Etat 27"));
+        return automat.shift(s, new State27("Etat 27"));
     break;        
     case COM_TOKEN:
-        automat.reduce(new NoTerminalSymbolVarDec(), 0);
+        return automat.reduce(new NoTerminalSymbolVarDec(), 0);
     break;
     case SEM_TOKEN:
-        automat.reduce(new NoTerminalSymbolVarDec(), 0);
+        return automat.reduce(new NoTerminalSymbolVarDec(), 0);
     break;
-    }
+	default:
+		errorDiagnostic(automat);
+	}
+
     return false;
 }
 
-void State7::errorDiagnostic(Symbol *s)
+void State7::errorDiagnostic(Automat &a)
 {
-
+	Error::syntaxError(SEM_EXPECTED);
 }
 
 
@@ -73,28 +82,26 @@ void State27::print()
 	State::print();
 }
 
-
 bool State27::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-
     case COM_TOKEN:
-        automat.shift(s, new State29("Etat 29"));
+        return automat.shift(s, new State29("Etat 29"));
     break;
 
     case SEM_TOKEN:
-        automat.shift(s, new State28("Etat 28"));
+        return automat.shift(s, new State28("Etat 28"));
     break; 
     default:
-        errorDiagnostic(s);
+        errorDiagnostic(automat);
     }
     return false;
 }
 
-void State27::errorDiagnostic(Symbol *s)
+void State27::errorDiagnostic(Automat &a)
 {
-
+	Error::syntaxError(SEM_EXPECTED);
 }
 
 //implementation of the State28 class methods
@@ -113,42 +120,42 @@ bool State28::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     case VAR_TOKEN:
-        automat.shift(s, new State4("State 4"));
+        return automat.shift(s, new State4("State 4"));
     break;
     case CONST_TOKEN:
-        automat.shift(s, new State5("State 5"));
+        return automat.shift(s, new State5("State 5"));
     break;
     case WRITE_TOKEN:
-        automat.reduce(new NoTerminalSymbolDec(), 0);
+        return automat.reduce(new NoTerminalSymbolDec(), 0);
     break;
     case READ_TOKEN:
-        automat.reduce(new NoTerminalSymbolDec(), 0);
+        return automat.reduce(new NoTerminalSymbolDec(), 0);
     break;
     case ID_TOKEN:
-        automat.reduce(new NoTerminalSymbolDec(), 0);
+        return automat.reduce(new NoTerminalSymbolDec(), 0);
     break;
     case EOF_TOKEN:
-        automat.reduce(new NoTerminalSymbolDec(), 0);
+        return automat.reduce(new NoTerminalSymbolDec(), 0);
     break; 
     case TOKEN_DEC:
-        //automat.shift(s, new State48("State 48"));
+        return automat.shift(s, new State48("State 48"));
     break;
     case TOKEN_VAR:
-        automat.shift(s, new State2("State 2"));
+        return automat.shift(s, new State2("State 2"));
     break;   
     case TOKEN_CONST:
-        automat.shift(s, new State3("State 3"));
+        return automat.shift(s, new State3("State 3"));
     break;            
     default:
-        errorDiagnostic(s);
+        errorDiagnostic(automat);
     }  
     return false;
 }
 
 
-void State28::errorDiagnostic(Symbol *s)
+void State28::errorDiagnostic(Automat &a)
 {
-
+	Error::syntaxError(INST_DEC_EXPECTED);
 }
 
 //implementation of the State29 class methods
@@ -166,17 +173,17 @@ bool State29::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     case ID_TOKEN:
-        automat.shift(s, new State30("State 30"));
+        return automat.shift(s, new State30("State 30"));
     break;
     default:
-        errorDiagnostic(s);
+        errorDiagnostic(automat);
     }
     return false;
 }
 
-void State29::errorDiagnostic(Symbol *s)
+void State29::errorDiagnostic(Automat &a)
 {
-
+	Error::syntaxError(IDF_EXPECTED);
 }
 
 //implementation of the State30 class methods
@@ -195,20 +202,20 @@ bool State30::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     case COM_TOKEN:
-        automat.reduce(new NoTerminalSymbolVarDec(), 3);
+        return automat.reduce(new NoTerminalSymbolVarDec(), 3);
     break;
     case SEM_TOKEN:
-        automat.reduce(new NoTerminalSymbolVarDec(), 3);
+        return automat.reduce(new NoTerminalSymbolVarDec(), 3);
     break;
     default:
-        errorDiagnostic(s);
+        errorDiagnostic(automat);
     }
     return false;
 }
 
-void State30::errorDiagnostic(Symbol *s)
+void State30::errorDiagnostic(Automat &a)
 {
-
+	Error::syntaxError(SEM_COM_EXPECTED);
 }
 
 //implementation of the State48 class methods
@@ -227,24 +234,24 @@ bool State48::transition(Automat &automat, Symbol *s)
     switch(*s)
     {
     case WRITE_TOKEN:
-        automat.reduce(new NoTerminalSymbolVar(), 6);
+        return automat.reduce(new NoTerminalSymbolVar(), 5);
     break;
     case READ_TOKEN:
-        automat.reduce(new NoTerminalSymbolVar(), 6);
+        return automat.reduce(new NoTerminalSymbolVar(), 5);
     break;
     case ID_TOKEN:
-        automat.reduce(new NoTerminalSymbolVar(), 6);
+        return automat.reduce(new NoTerminalSymbolVar(), 5);
     break; 
     case EOF_TOKEN:
-        automat.reduce(new NoTerminalSymbolVar(), 6);
+        return automat.reduce(new NoTerminalSymbolVar(), 5);
     break;   
     default:
-        errorDiagnostic(s);
+        errorDiagnostic(automat);
     }
     return false;
 }
 
-void State48::errorDiagnostic(Symbol *s)
+void State48::errorDiagnostic(Automat &a)
 {
-
+	Error::syntaxError(INSTRUCTION_EXPECTED);
 }

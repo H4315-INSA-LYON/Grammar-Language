@@ -2,7 +2,6 @@
 
 #ifndef __SYMBOL_CLASS_
 #define __SYMBOL_CLASS_
-#endif
 
 namespace lutinCompiler
 {
@@ -17,6 +16,7 @@ namespace lutinCompiler
 		virtual ~Symbol(){}
 
 		virtual void print() = 0;
+		//virtual Symbol* construct() = 0;
 
 		operator int() const
 		{
@@ -34,3 +34,5 @@ namespace lutinCompiler
 #include "OperatorSymbols.h"
 #include "SpecialSymbols.h"
 #include "NoTerminalSymbols.h"
+
+#endif

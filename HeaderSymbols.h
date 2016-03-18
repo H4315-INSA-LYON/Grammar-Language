@@ -16,6 +16,11 @@ namespace lutinCompiler
 		{
 			cout << "var" << endl;
 		}
+
+		Symbol *construct()
+		{
+			return nullptr;
+		}
 	};
 
 	class ConstSymbol : public Symbol
@@ -28,28 +33,33 @@ namespace lutinCompiler
 		{
 			cout << "const" << endl;
 		}
+
+		Symbol *construct()
+		{
+			return nullptr;
+		}
 	};
 
 	class IdentificatorSymbol : public Symbol
 	{
 	public:
-		IdentificatorSymbol(const char* name) : Symbol(ID_TOKEN)
+		IdentificatorSymbol(string name) : Symbol(ID_TOKEN)
 		{
-			strcpy(this->name, name);
+			this->name = name;
 		}
 
 		void print()
 		{
-			cout << "identificateur : " << name << endl;
+			cout << name;
 		}
 
-		char* getName()
+		string getName()
 		{
 			return name;
 		}
 
 	private:
-		char name[IDF_LENGTH];	
+		string name;
 	};
 
 	class NumberSymbol : public Symbol
@@ -62,7 +72,7 @@ namespace lutinCompiler
 
 		void print()
 		{
-			cout << "numéro : " << number << endl;
+			cout << number;
 		}
 
 		int getNumber()

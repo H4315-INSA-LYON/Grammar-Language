@@ -9,17 +9,16 @@
 
 namespace lutinCompiler
 {
-	// Le numéro de la ligne en cours d'analyse
-	static int LINE_NUMBER = 0;
-	// Le numéro du caractère en cours d'analyse
-	static int CARACTER_NUMBER = 0;
-
 	// Les mots clés du langage
 	const char key_word[WORDS_NUM][IDF_LENGTH] = {  "var", "const", "ecrire", "lire" };
 
 	class Scanner
 	{
 	public:
+		// Le numéro de la ligne en cours d'analyse
+		static int LINE_NUMBER;
+		// Le numéro du caractère en cours d'analyse
+		static int CARACTER_NUMBER;
 		/*
 		 * Constructeur 
 		 */
@@ -44,6 +43,13 @@ namespace lutinCompiler
 		* @return: Symbole*
 		*/
 		Symbol* nextSymbol();
+
+		/*
+		* Getteur de symbole courrant
+		* @access: public
+		* @return: Symbole*
+		*/
+		Symbol* getCurrentSymbol();
 
 		/*
 		 * Methode qui crée le symbole correspant aux mots clés en fonction du token passé en paramètre
@@ -90,19 +96,13 @@ namespace lutinCompiler
 		 */
 		bool nextCaracter();
 
-		/*
-		 * Methode qui charger le fichier
-		 * @param: const char* le nom du fichier
-		 * @access: private
-		 * @return: bool [true: le fichier est bien chargé, false: erreur d'ouverture du fichier]
-		 */
-		//bool load(const char*);
-
 		// Fichier
 		FILE * fileStream;
 
 		// Caractère courrant
 		char currentCaracter;
+		// Symbole courrant
+		Symbol *currentSymbol;
 	};
 
 };
