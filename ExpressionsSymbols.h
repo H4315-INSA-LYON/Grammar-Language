@@ -16,6 +16,7 @@ namespace lutinCompiler
 		{
 			cout << "ecrire" << endl;
 		}
+
 	};
 
 	class ReadSymbol : public Symbol
@@ -40,5 +41,6 @@ namespace lutinCompiler
 		{
 			cout << ":=" << endl;
 		}
+
 	};
 }

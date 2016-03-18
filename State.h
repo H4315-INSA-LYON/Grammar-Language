@@ -14,7 +14,7 @@ namespace lutinCompiler
 		~State();
 
 		virtual void print();
-		virtual void errorDiagnostic(Symbol *) = 0;
+		virtual void errorDiagnostic(Automat &) = 0;
 		virtual bool transition(Automat &, Symbol *) = 0;
 
 	protected:

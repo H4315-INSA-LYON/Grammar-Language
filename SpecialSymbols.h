@@ -16,6 +16,8 @@ namespace lutinCompiler
 		{
 			cout << "=" << endl;
 		}
+
+	
 	};
 
 	class CommaSymbol : public Symbol
@@ -28,6 +30,8 @@ namespace lutinCompiler
 		{
 			cout << "," << endl;
 		}
+
+		
 	};
 
 	class SemicolonSymbol : public Symbol
@@ -40,6 +44,8 @@ namespace lutinCompiler
 		{
 			cout << ";" << endl;
 		}
+
+		
 	};
 
 	class OpeningParenthesisSymbol : public Symbol
@@ -52,6 +58,8 @@ namespace lutinCompiler
 		{
 			cout << "(" << endl;
 		}
+
+		
 	};
 
 	class ClosingParenthesisSymbol : public Symbol
@@ -64,6 +72,8 @@ namespace lutinCompiler
 		{
 			cout << ")" << endl;
 		}
+
+		
 	};
 
 	class EOFSymbol : public Symbol
@@ -76,5 +86,7 @@ namespace lutinCompiler
 		{
 			cout << "EOF" << endl;
 		}
+
+	
 	};
 }

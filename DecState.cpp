@@ -18,32 +18,37 @@ bool State0::transition(Automat &automat, Symbol *s)
     {
 	// Transitions sur les symbols terminaux
 	case VAR_TOKEN:
-		automat.shift(s, new State4("Etat 4"));
+		return automat.shift(s, new State4("Etat 4"));
 	break;
 	case CONST_TOKEN:
-		automat.shift(s, new State5("Etat 5"));
+		return automat.shift(s, new State5("Etat 5"));
+	break;
+	case WRITE_TOKEN: 
+	case READ_TOKEN: 
+	case EOF_TOKEN:
+		return automat.reduce(new NoTerminalSymbolDec(), 0);
 	break;
 	// Transitions sur les symboles non terminaux
 	case TOKEN_DEC:
-		automat.shift(s, new State1("Etat 1"));
+		return automat.shift(s, new State1("Etat 1"));
 	break;
 	case TOKEN_VAR:
-		automat.shift(s, new State2("Etat 2"));
+		return automat.shift(s, new State2("Etat 2"));
 	break;
 	case TOKEN_CONST:
-		automat.shift(s, new State3("Etat 3"));
+		return automat.shift(s, new State3("Etat 3"));
 	break;
 	default:
 
-		errorDiagnostic(s);
-
+		errorDiagnostic(automat);
     }
-    return false;
+
+	return false;
 }
 
-void State0::errorDiagnostic(Symbol *s)
+void State0::errorDiagnostic(Automat &a)
 {
-	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): var or const symbol expected" << endl;
+	Error::syntaxError(VAR_CONST_EXPECTED);
 }
 
 //implementation of the State1 class methods
@@ -56,32 +61,26 @@ void State1::print()
 	State::print();	
 }
 
-void State1::errorDiagnostic(Symbol *s)
+void State1::errorDiagnostic(Automat &a)
 {
-	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): write, read, id, eof or INSTS token expected" << endl;
+	Error::syntaxError(INSTRUCTION_EXPECTED);
 }
 
 bool State1::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-    	case WRITE_TOKEN:
-			automat.reduce(new NoTerminalSymbolInsts(), 0);
-			break;
-		case READ_TOKEN:
-			automat.reduce(new NoTerminalSymbolInsts(), 0);
-			break;
-		case ID_TOKEN:
-			automat.reduce(new NoTerminalSymbolInsts(), 0);
-			break;
-		case EOF_TOKEN:
-			automat.reduce(new NoTerminalSymbolInsts(), 0);
-			break;
-		case TOKEN_INSTS:
-			automat.shift(s, new State6("Etat 6"));
-			break;
-		default:
-			errorDiagnostic(s);
+	case ID_TOKEN:
+	case READ_TOKEN:
+	case WRITE_TOKEN:
+	case EOF_TOKEN:
+		return automat.reduce(new NoTerminalSymbolInsts(), 0);
+	break;
+	case TOKEN_INSTS:
+		return automat.shift(s, new State6("Etat 6"));
+		break;
+	default:
+		errorDiagnostic(automat);
     }
     return false;
 }
@@ -101,27 +100,22 @@ bool State2::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-    	case WRITE_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-			break;
-		case READ_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-			break;
-		case ID_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-			break;
-		case EOF_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-			break;	
-		default:
-			errorDiagnostic(s);
+    case WRITE_TOKEN:
+	case EOF_TOKEN:
+	case ID_TOKEN:
+	case READ_TOKEN:
+		return automat.reduce(new NoTerminalSymbolDec(), 1);
+	break;
+	default:
+		errorDiagnostic(automat);
+		return false;
     }
     return false;
 }
 
-void State2::errorDiagnostic(Symbol *s)
+void State2::errorDiagnostic(Automat &a)
 {
-	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): write, read, id or eof token expected" << endl;
+	Error::syntaxError(INST_DEC_EXPECTED);
 }
 
 //implementation of the State3 class methods
@@ -139,22 +133,19 @@ bool State3::transition(Automat &automat, Symbol *s)
 {
     switch(*s)
     {
-    	case WRITE_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-			break;
-		case READ_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-			break;
-		case ID_TOKEN:
-			automat.reduce(new NoTerminalSymbolDec(), 1);
-		break;
-		default:
-			errorDiagnostic(s);
+    case WRITE_TOKEN:
+	case EOF_TOKEN:
+	case ID_TOKEN:
+	case READ_TOKEN:
+		return automat.reduce(new NoTerminalSymbolDec(), 1);
+	break;
+	default:
+		errorDiagnostic(automat);
     }
     return false;
 }
 
-void State3::errorDiagnostic(Symbol *s)
+void State3::errorDiagnostic(Automat &a)
 {
-	cerr << "ERROR (" << LINE_NUMBER << ":" << CARACTER_NUMBER << "): write, read, id or eof token expected" << endl;
+	Error::syntaxError(INST_DEC_EXPECTED);
 }

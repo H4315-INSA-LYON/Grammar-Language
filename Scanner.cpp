@@ -2,13 +2,17 @@
 
 using namespace lutinCompiler;
 
+int Scanner::LINE_NUMBER, Scanner::CARACTER_NUMBER;
+
 /*
  * Constructeur 
  */
 Scanner::Scanner()
 {
 	LINE_NUMBER = 1;
+	CARACTER_NUMBER = -1;
 	fileStream = nullptr;
+	currentSymbol = nullptr;
 }
 
 /*
@@ -72,37 +76,37 @@ Symbol* Scanner::nextSymbol()
 		// Addition
 		case '+': 
 					nextCaracter();
-					return new PlusSymbol();
+					currentSymbol = new PlusSymbol();
 		break; 
 		// Soustraction
 		case '-': 
 					nextCaracter();
-					return new MinusSymbol();
+					currentSymbol = new MinusSymbol();
 		break; 
 		// Multiplication
 		case '*': 
 					nextCaracter();
-					return new MuliplicationSymbol();
+					currentSymbol = new MuliplicationSymbol();
 		break; 
 		// Division
 		case '/': 
 					nextCaracter();
-					return new DivisionSymbol();
+					currentSymbol = new DivisionSymbol();
 		break; 
 		// Point virgule
 		case ';': 
 					nextCaracter(); 
-					return new SemicolonSymbol();
+					currentSymbol = new SemicolonSymbol();
 		break;
 		// Virgule
 		case ',': 
 					nextCaracter();
-					return new CommaSymbol();
+					currentSymbol = new CommaSymbol();
 		break;
 		// Affectation pour les constantes
 		case '=': 
 					nextCaracter();
-					return new EqualSymbol();
+					currentSymbol = new EqualSymbol();
 		break;
 		// Affectation pour les identificateurs
 		case ':':
@@ -111,28 +115,28 @@ Symbol* Scanner::nextSymbol()
 					if (currentCaracter == '=')
 					{
 						nextCaracter();
-						return new AffectationSymbol();
+						currentSymbol = new  AffectationSymbol();
 					}	
 		break;
 		// Prenthése ouvrante
 		case '(': 
 					nextCaracter();
-					return new OpeningParenthesisSymbol();
+					currentSymbol = new  OpeningParenthesisSymbol();
 		break;  
 		// Parenthése fermante
 		case ')': 
 					nextCaracter();
-					return new ClosingParenthesisSymbol();
+					currentSymbol = new  ClosingParenthesisSymbol();
 		break;
 		// Fin du flux
 		case EOF: 
-					return new EOFSymbol();
+					currentSymbol = new  EOFSymbol();
 		break;
 		// Caractère inacceptable
 		default: 
 					throw UNDIFINED_CARACTER;   
 	}
-	return nullptr;
+	return currentSymbol;
 }
 
 /*
@@ -165,14 +169,17 @@ Symbol* Scanner::readWords()
 	while (i < WORDS_NUM)
        
 		if (!stricmp(strname, key_word[i]))
-		
-			return createSymbol((TOKEN)i);
-		
+		{
+			currentSymbol = createSymbol((TOKEN)i);
+			return currentSymbol;
+		}
 		else
           
 			i++;
            
-	return new IdentificatorSymbol(strname);
+	currentSymbol = new IdentificatorSymbol(strname);
+
+	return currentSymbol;
 }
 
 /*
@@ -199,7 +206,9 @@ Symbol* Scanner::readNumber()
 	strname[i] = '\0';
 
 	// Affecation des tokens
-	return new NumberSymbol(atoi(strname));
+	currentSymbol = new NumberSymbol(atoi(strname));
+
+	return currentSymbol;
 }
 
 /*
@@ -217,7 +226,7 @@ void Scanner::readComments()
 
 	do
 	{
-		while (currentCaracter != '*')
+		while (currentCaracter != '*' && currentCaracter != EOF)
 		{
 			nextCaracter();
 			if (currentCaracter == '\n') LINE_NUMBER++;
@@ -246,13 +255,21 @@ void Scanner::readComments()
  */
 void Scanner::readSpaces()
 {
-	if (currentCaracter == '\n') LINE_NUMBER++;
+	if (currentCaracter == '\n') 
+	{
+		++LINE_NUMBER;
+		CARACTER_NUMBER = -1;
+	}
 
 	// ignorer les espacement
 	while (isspace(currentCaracter))
 	{
 		nextCaracter();
-		if (currentCaracter == '\n') LINE_NUMBER++;
+		if (currentCaracter == '\n')
+		{
+			++LINE_NUMBER;
+			CARACTER_NUMBER = -1;
+		}
 	}
 }
 
@@ -265,6 +282,7 @@ bool Scanner::nextCaracter()
 {
 	// lire le caractère dans le flux de données
 	currentCaracter = fgetc(fileStream);
+	++CARACTER_NUMBER;
 
 	return currentCaracter != EOF;
 }
@@ -285,8 +303,21 @@ void Scanner::load(const char* filename)
 		throw FILE_NOT_EXIST;
 
 	else
+	{
+		nextCaracter();
 
-		if (!nextCaracter())
+		if (*nextSymbol() == EOF_TOKEN)
 
 			throw EMPTY_FILE;
+	}
+}
+
+/*
+ * Getteur de symbole courrant
+ * @access: public
+ * @return: Symbole*
+ */
+Symbol* Scanner::getCurrentSymbol()
+{
+	return currentSymbol;
 }

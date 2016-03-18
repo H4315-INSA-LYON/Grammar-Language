@@ -11,7 +11,7 @@ namespace lutinCompiler
         State5 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State8: public State
@@ -20,7 +20,7 @@ namespace lutinCompiler
         State8 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State9: public State
@@ -29,7 +29,7 @@ namespace lutinCompiler
         State9 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State20: public State
@@ -38,7 +38,7 @@ namespace lutinCompiler
         State20 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State21: public State
@@ -47,7 +47,7 @@ namespace lutinCompiler
         State21 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State22: public State
@@ -56,7 +56,7 @@ namespace lutinCompiler
         State22 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State23: public State
@@ -65,7 +65,7 @@ namespace lutinCompiler
         State23 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State24: public State
@@ -74,7 +74,7 @@ namespace lutinCompiler
         State24 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
     class State25: public State
     {
@@ -82,7 +82,7 @@ namespace lutinCompiler
         State25 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
     class State26: public State
@@ -91,7 +91,7 @@ namespace lutinCompiler
         State26 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 	class State49: public State
     {
@@ -99,7 +99,7 @@ namespace lutinCompiler
         State49 (const char* name);
         void print();
         bool transition (Automat & automat, Symbol * s);
-		void errorDiagnostic(Symbol*);
+		void errorDiagnostic(Automat&);
     };
 
 }
