@@ -26,6 +26,17 @@ bool State5 ::transition(Automat &automat, Symbol *s)
 void State5::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(IDF_EXPECTED);
+	switch (*a.ignoreSymbolsToDec()) {
+		a.pushSymbol(new IdentificatorSymbol("id"));
+		a.pushSymbol(new EqualSymbol());
+		a.pushSymbol(new NumberSymbol(0));
+		a.pushSymbol(new NoTerminalSymbolConstDec());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolConst(), 6);
+		// no shift, only reduce
+		default:
+			break;
+	}
 }
 
 //implementation of the State8 class methods
@@ -53,6 +64,15 @@ bool State8 ::transition(Automat &automat, Symbol *s)
 void State8::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EQ_EXPECTED);
+	switch (*a.ignoreSymbolsToDec()) {
+		a.pushSymbol(new EqualSymbol());
+		a.pushSymbol(new NoTerminalSymbolConstDec());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolConst(), 6);
+		// no shift, only reduce
+	default:
+		break;
+	}
 }
 
 //implementation of the State9 class methods
@@ -79,6 +99,15 @@ bool State9 ::transition(Automat &automat, Symbol *s)
 void State9::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(NUM_EXPECTED);
+	switch (*a.ignoreSymbolsToDec()) {
+		a.pushSymbol(new EqualSymbol());
+		a.pushSymbol(new NoTerminalSymbolConstDec());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolConst(), 6);
+		// no shift, only reduce
+		default:
+			break;
+	}
 }
 
 //implementation of the State20 class methods
@@ -111,6 +140,14 @@ bool State20 ::transition(Automat &automat, Symbol *s)
 void State20::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_COM_EXPECTED);
+	switch (*a.ignoreSymbolsToDec()) {
+		a.pushSymbol(new NoTerminalSymbolConstDec());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolConst(), 6);
+		// no shift, only reduce
+		default:
+			break;
+	}
 }
 
 //implementation of the State21 class methods
@@ -140,6 +177,14 @@ bool State21 ::transition(Automat &automat, Symbol *s)
 void State21::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_COM_EXPECTED);
+	switch (*a.ignoreSymbolsToDec()) {
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolConst(), 6);
+		// no shift, only reduce
+	default:
+		break;
+	}
+
 }
 
 //implementation of the State22 class methods

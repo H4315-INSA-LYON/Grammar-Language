@@ -321,3 +321,4 @@ Symbol* Scanner::getCurrentSymbol()
 {
 	return currentSymbol;
 }
+

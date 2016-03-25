@@ -226,6 +226,29 @@ namespace lutinCompiler
 				return true;
 		}
 
+		Symbol* ignoreSymbolsToDec()
+		{
+			while (*scanner.nextSymbol() != VAR_TOKEN  && *scanner.nextSymbol() != CONST_TOKEN &&
+				*scanner.nextSymbol() != WRITE_TOKEN  && *scanner.nextSymbol() != READ_TOKEN  &&
+				*scanner.nextSymbol() != COM_TOKEN &&
+				*scanner.nextSymbol() != ID_TOKEN  && *scanner.nextSymbol() != EOF_TOKEN);
+
+			return scanner.getCurrentSymbol();
+		}
+
+		Symbol* ignoreSymbolsToInst()
+		{
+			while (*scanner.nextSymbol() != WRITE_TOKEN  && *scanner.nextSymbol() != READ_TOKEN  &&
+				*scanner.nextSymbol() != ID_TOKEN  && *scanner.nextSymbol() != EOF_TOKEN);
+
+			return scanner.getCurrentSymbol();
+		}
+
+		void pushSymbol(Symbol* symbol)
+		{
+			symbols.push(symbol);
+		}
+
 
 	private:
 		StackState stats;

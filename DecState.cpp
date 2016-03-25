@@ -1,6 +1,6 @@
 #include "lutin.h"
 
-using namespace lutinCompiler;
+using namespace lutinCompile ;
 
 //implementation of the State0 class methods
 State0::State0(const char *name) : State(name)
