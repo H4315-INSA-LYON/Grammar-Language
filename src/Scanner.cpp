@@ -168,7 +168,7 @@ Symbol* Scanner::readWords()
     
 	while (i < WORDS_NUM)
        
-		if (!stricmp(strname, key_word[i]))
+		if (!strcmp(strname, key_word[i]))
 		{
 			currentSymbol = createSymbol((TOKEN)i);
 			return currentSymbol;

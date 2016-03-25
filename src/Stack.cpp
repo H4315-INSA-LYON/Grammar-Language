@@ -2,7 +2,7 @@
 
 using namespace lutinCompiler;
 
-Stack::Stack()
+Stack()
 {
 
 }

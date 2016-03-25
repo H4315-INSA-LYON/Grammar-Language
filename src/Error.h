@@ -3,7 +3,7 @@
 namespace lutinCompiler
 {
 	// Les erreurs lexicals
-	static enum SCANNER_ERROR
+	enum SCANNER_ERROR
 	{
 		FILE_NOT_EXIST, 
 		IDF_VERY_LARGE, 
@@ -14,7 +14,7 @@ namespace lutinCompiler
 	};
 
 	// Les erreurs syntaxiques
-	static enum ANALYSER_ERROR
+	enum ANALYSER_ERROR
 	{
 		VAR_CONST_EXPECTED,
 		INSTRUCTION_EXPECTED,
@@ -31,7 +31,7 @@ namespace lutinCompiler
 	};
 
 	// Les erreurs sémantiques
-	static enum SEMANTIC_ERROR
+	enum SEMANTIC_ERROR
 	{
 		IDF_ALEARDY_EXIST,
 		IDF_NOT_DECLARED

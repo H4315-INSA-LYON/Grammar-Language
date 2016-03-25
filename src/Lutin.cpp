@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	Automat a;
 	try
 	{
-		a.analyse("test/correct.lt");
+		a.analyse("../test/correct.lt");
 
 	}
 	catch (SCANNER_ERROR num)
