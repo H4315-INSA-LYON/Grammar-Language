@@ -31,7 +31,13 @@ bool State4 ::transition(Automat &automat, Symbol *s)
 void State4::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(IDF_EXPECTED);
-
+	if (*a.ignoreSymbolsToDec())
+	{
+		a.pushSymbol(new IdentificatorSymbol("id"));
+		a.pushSymbol(new NoTerminalSymbolVarDec());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolVarDec(), 4);
+	}
 	/*a.ignoreSymbolsTo(SEM_TOKEN);
 
 	this->transition(a, new IdentificatorSymbol("id0"));*/
@@ -70,6 +76,16 @@ bool State7::transition(Automat &automat, Symbol *s)
 void State7::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToDec())
+	{	
+		a.pushSymbol(new NoTerminalSymbolVarDec());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolVarDec(),4);
+
+		default:
+			break;
+	}
+
 }
 
 
@@ -101,7 +117,14 @@ bool State27::transition(Automat &automat, Symbol *s)
 
 void State27::errorDiagnostic(Automat &a)
 {
-	Error::syntaxError(SEM_EXPECTED);
+	Error::syntaxError(SEM_COM_EXPECTED);
+	switch (*a.ignoreSymbolsToDec()) {
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolDec(), 4);
+		// no shift, only reduce
+	default:
+		break;
+	}
 }
 
 //implementation of the State28 class methods

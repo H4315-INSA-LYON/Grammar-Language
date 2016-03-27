@@ -68,6 +68,14 @@ bool State10 ::transition(Automat &automat, Symbol *s)
 void State10::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NoTerminalSymbolInst());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInsts(), 3);
+	default:
+		break;
+	}
 }
 //implementation of the State11 class methods
 State11 :: State11(const char* name) : State(name)
@@ -93,6 +101,13 @@ bool State11 ::transition(Automat &automat, Symbol *s)
 void State11::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInst(),2);
+	default:
+		break;
+	}
 }
 
 //implementation of the State12 class methods
@@ -119,6 +134,13 @@ bool State12 ::transition(Automat &automat, Symbol *s)
 void State12::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInst(), 2);
+	default:
+		break;
+	}
 }
 
 //implementation of the State13 class methods
@@ -146,6 +168,13 @@ bool State13 ::transition(Automat &automat, Symbol *s)
 void State13::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst()){
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInst(), 2);
+
+	default:
+		break;
+	}
 }
 //implementation of the State14 class methods
 State14 :: State14(const char* name) : State(name)
@@ -171,6 +200,15 @@ bool State14 ::transition(Automat &automat, Symbol *s)
 void State14::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(AFF_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NoTerminalSymbolAff());
+		a.pushSymbol(new IdentificatorSymbol("id"));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInst(),4);
+		default:
+			break;
+	}
 }
 //implementation of the State15 class methods
 State15 :: State15(const char* name) : State(name)
@@ -206,6 +244,14 @@ bool State15 ::transition(Automat &automat, Symbol *s)
 void State15::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch(*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new IdentificatorSymbol("id"));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInst(), 3);
+	default:
+		break;
+	}
 }
 //implementation of the State16 class methods
 State16 :: State16(const char* name) : State(name)
@@ -231,6 +277,14 @@ bool State16 ::transition(Automat &automat, Symbol *s)
 void State16::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(IDF_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new IdentificatorSymbol("id"));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolRead(), 3);
+	default:
+		break;
+	}
 }
 
 //implementation of the State17 class methods
@@ -258,6 +312,13 @@ bool State17 ::transition(Automat &automat, Symbol *s)
 void State17::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToDec())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolRead(), 3);
+		default:
+			break;
+	}
 }
 //implementation of the State18 class methods
 State18 :: State18(const char* name) : State(name)
@@ -289,6 +350,13 @@ bool State18::transition(Automat &automat, Symbol *s)
 void State18::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(DELETE_TOKEN);
+	switch (*a.ignoreSymbolsToDec())
+	{
+		a.pushSymbol(new EOFSymbol());
+		a.reduce(new NoTerminalSymbolInsts(), 3);
+		default:
+			break;
+	}
 }
 
 //implementation of the State19 class methods
@@ -326,6 +394,15 @@ bool State19 ::transition(Automat &automat, Symbol *s)
 void State19::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+
+	{
+		a.pushSymbol(new IdentificatorSymbol("id"));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolInst(), 4);
+	default:
+		break;
+	}
 }
 
 //implementation of the State31 class methods
@@ -358,6 +435,13 @@ bool State31 ::transition(Automat &automat, Symbol *s)
 void State31::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolWrite(), 3);
+	default:
+		break;
+	}
 }
 
 //implementation of the State32 class methods
@@ -388,6 +472,14 @@ bool State32 ::transition(Automat &automat, Symbol *s)
 void State32::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(0));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAddOp(), 5);
+	default:
+		break;
+	}
 }
 //implementation of the State33 class methods
 State33 :: State33(const char* name) : State(name)
@@ -418,6 +510,14 @@ bool State33 ::transition(Automat &automat, Symbol *s)
 void State33::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(0));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAddOp(), 5);
+	default:
+		break;
+	}
 }
 //implementation of the State34 class methods
 State34 :: State34(const char* name) : State(name)
@@ -485,6 +585,14 @@ bool State35 ::transition(Automat &automat, Symbol *s)
 void State35::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(1));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolMulOp(), 7);
+	default:
+		break;
+	}
 }
 //implementation of the State36 class methods
 State36 :: State36(const char* name) : State(name)
@@ -514,6 +622,14 @@ bool State36 ::transition(Automat &automat, Symbol *s)
 void State36::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(1));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolMulOp(), 7);
+	default:
+		break;
+	}
 }
 //implementation of the State37 class methods
 State37 :: State37(const char* name) : State(name)
@@ -548,6 +664,14 @@ bool State37 ::transition(Automat &automat, Symbol *s)
 void State37::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(0));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAddOp(), 5);
+	default:
+		break;
+	}
 }
 //implementation of the State38 class methods
 State38 :: State38(const char* name) : State(name)
@@ -580,6 +704,14 @@ bool State38 ::transition(Automat &automat, Symbol *s)
 void State38::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(1));
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolMulOp(), 7);
+	default:
+		break;
+	}
 }
 //implementation of the State39 class methods
 State39 :: State39(const char* name) : State(name)
@@ -615,6 +747,13 @@ bool State39 ::transition(Automat &automat, Symbol *s)
 void State39::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAddOp(), 5);
+	default:
+		break;
+	}
 }
 //implementation of the State40 class methods
 State40 :: State40(const char* name) : State(name)
@@ -651,6 +790,13 @@ bool State40 ::transition(Automat &automat, Symbol *s)
 void State40::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAddOp(), 5);
+	default:
+		break;
+	}
 }
 //implementation of the State41 class methods
 State41 :: State41(const char* name) : State(name)
@@ -687,6 +833,15 @@ bool State41 ::transition(Automat &automat, Symbol *s)
 void State41::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(EXPR_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new NumberSymbol(0));
+		a.pushSymbol(new ClosingParenthesisSymbol());
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAddOp(), 8);
+	default:
+		break;
+	}
 }
 //implementation of the State42 class methods
 State42 :: State42(const char* name) : State(name)
@@ -761,6 +916,13 @@ bool State43 ::transition(Automat &automat, Symbol *s)
 void State43::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolMulOp(), 6);
+	default:
+		break;
+	}
 }
 //implementation of the State44 class methods
 State44 :: State44(const char* name) : State(name)
@@ -829,6 +991,13 @@ bool State45 ::transition(Automat &automat, Symbol *s)
 void State45::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(SEM_EXPECTED);
+	switch (*a.ignoreSymbolsToInst())
+	{
+		a.pushSymbol(new SemicolonSymbol());
+		a.reduce(new NoTerminalSymbolAff(), 4);
+	default:
+		break;
+	}
 }
 //implementation of the State46 class methods
 State46 :: State46(const char* name) : State(name)

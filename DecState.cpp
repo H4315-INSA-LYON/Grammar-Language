@@ -1,6 +1,6 @@
 #include "lutin.h"
 
-using namespace lutinCompile ;
+using namespace lutinCompiler ;
 
 //implementation of the State0 class methods
 State0::State0(const char *name) : State(name)
@@ -116,6 +116,10 @@ bool State2::transition(Automat &automat, Symbol *s)
 void State2::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(INST_DEC_EXPECTED);
+	if (*a.ignoreSymbolsToDec())
+	{
+		a.reduce(new NoTerminalSymbolDec(), 1);
+	}
 }
 
 //implementation of the State3 class methods
@@ -148,4 +152,8 @@ bool State3::transition(Automat &automat, Symbol *s)
 void State3::errorDiagnostic(Automat &a)
 {
 	Error::syntaxError(INST_DEC_EXPECTED);
+	if (*a.ignoreSymbolsToDec())
+	{
+		a.reduce(new NoTerminalSymbolDec(), 1);
+	}
 }
